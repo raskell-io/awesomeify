@@ -2,6 +2,7 @@
 
 use anyhow::{Context, Result};
 use console::style;
+use serde::Serialize;
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 use tera::{Context as TeraContext, Tera};
@@ -51,14 +52,14 @@ pub struct GeneratorStats {
     pub active_repos: usize,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct LanguageStats {
     pub name: String,
     pub count: usize,
     pub slug: String,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct TopicStats {
     pub name: String,
     pub count: usize,

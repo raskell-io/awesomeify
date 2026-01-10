@@ -1,3 +1,3 @@
 mod sqlite;
 
-pub use sqlite::{Database, DatabaseStats};
+pub use sqlite::Database;
