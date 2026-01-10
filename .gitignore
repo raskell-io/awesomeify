@@ -1,0 +1,32 @@
+# Build artifacts
+/target
+/dist
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+
+# Data directory (generated)
+/data/*.json
+/data/by-language/
+/data/by-topic/
+
+# Environment
+.env
+.env.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# Pagefind output
+/dist/pagefind/
+
+# Node modules (for Pagefind)
+node_modules/

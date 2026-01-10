@@ -1,0 +1,15 @@
+{
+  "project": {
+    "name": "awesomeify",
+    "description": "Index and search open source repositories to create awesome lists on demand"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(cargo *)",
+      "Bash(mise *)",
+      "Bash(npx pagefind*)",
+      "Bash(npx serve*)",
+      "Bash(git *)"
+    ]
+  }
+}

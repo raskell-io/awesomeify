@@ -1,0 +1,43 @@
+# Seed configuration for awesomeify
+# Define awesome lists and search queries to bootstrap the index
+
+[[seeds]]
+name = "Awesome Rust"
+type = "awesome-list"
+url = "https://raw.githubusercontent.com/rust-unofficial/awesome-rust/main/README.md"
+
+[[seeds]]
+name = "Awesome Go"
+type = "awesome-list"
+url = "https://raw.githubusercontent.com/avelino/awesome-go/main/README.md"
+
+[[seeds]]
+name = "Awesome Python"
+type = "awesome-list"
+url = "https://raw.githubusercontent.com/vinta/awesome-python/master/README.md"
+
+[[seeds]]
+name = "Awesome TypeScript"
+type = "awesome-list"
+url = "https://raw.githubusercontent.com/dzharii/awesome-typescript/master/README.md"
+
+# Search queries to find additional repos
+[[queries]]
+name = "Popular Rust CLIs"
+query = "language:rust topic:cli stars:>100"
+limit = 500
+
+[[queries]]
+name = "Active Rust Projects"
+query = "language:rust stars:>500 pushed:>2024-01-01"
+limit = 1000
+
+[[queries]]
+name = "Popular Go Projects"
+query = "language:go stars:>1000"
+limit = 500
+
+[[queries]]
+name = "Trending Developer Tools"
+query = "topic:developer-tools stars:>200"
+limit = 500

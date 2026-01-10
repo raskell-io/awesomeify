@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block title %}{{ title }} - Discover Open Source{% endblock %}
+
+{% block head %}
+<link href="{{ base_url }}pagefind/pagefind-ui.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<main class="main-content">
+    <section class="hero">
+        <h2>Discover Open Source</h2>
+        <p>Explore {{ total_count | format_number }} curated repositories across {{ language_count }} languages</p>
+        {{ macros::stats_bar(
+            total_count=total_count,
+            language_count=language_count,
+            topic_count=topic_count,
+            total_stars=total_stars,
+            active_count=active_count
+        ) }}
+    </section>
+
+    <section class="search-section">
+        <div id="search"></div>
+    </section>
+
+    <div class="content-grid">
+        <aside class="sidebar">
+            <section class="filter-section">
+                <h3>Filters</h3>
+                <div class="filter-group">
+                    <label for="language-filter">Language</label>
+                    <select id="language-filter">
+                        <option value="">All Languages</option>
+                        {% for lang in languages %}
+                        <option value="{{ lang.name | lower }}">{{ lang.name }} ({{ lang.count }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="sort-by">Sort by</label>
+                    <select id="sort-by">
+                        <option value="stars">Stars</option>
+                        <option value="activity">Activity</option>
+                        <option value="recent">Recently Updated</option>
+                        <option value="name">Name</option>
+                    </select>
+                </div>
+
+                <div class="filter-group checkbox">
+                    <label>
+                        <input type="checkbox" id="active-only">
+                        Active projects only
+                    </label>
+                </div>
+
+                <div class="filter-group checkbox">
+                    <label>
+                        <input type="checkbox" id="hide-forks">
+                        Hide forks
+                    </label>
+                </div>
+            </section>
+
+            <section id="languages" class="nav-section">
+                <h3>Top Languages</h3>
+                <ul class="nav-list">
+                    {% for lang in languages %}
+                    <li>
+                        <a href="{{ base_url }}language/{{ lang.slug }}.html">
+                            <span class="language-dot" data-lang="{{ lang.name | lower }}"></span>
+                            {{ lang.name }}
+                            <span class="count">{{ lang.count }}</span>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+            <section id="topics" class="nav-section">
+                <h3>Popular Topics</h3>
+                <div class="topic-cloud">
+                    {% for topic in topics %}
+                    <a href="{{ base_url }}topic/{{ topic.slug }}.html" class="topic-tag">
+                        {{ topic.name }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </section>
+        </aside>
+
+        <section class="repos-section">
+            <div class="section-header">
+                <h3>Repositories</h3>
+                <span class="repo-count" id="visible-count">{{ repos | length }}</span>
+            </div>
+
+            <div class="repos-grid" id="repos-list">
+                {% for repo in repos %}
+                {{ macros::repo_card(repo=repo) }}
+                {% endfor %}
+            </div>
+
+            {% if total_repos > 100 %}
+            <div class="load-more">
+                <p>Showing 100 of {{ total_repos | format_number }} repositories</p>
+                <p class="hint">Use search or filters to find more, or browse by language/topic</p>
+            </div>
+            {% endif %}
+        </section>
+    </div>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ base_url }}pagefind/pagefind-ui.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        // Initialize Pagefind if available
+        if (typeof PagefindUI !== 'undefined') {
+            new PagefindUI({
+                element: "#search",
+                showSubResults: true,
+                showImages: false
+            });
+        }
+    });
+</script>
+{% endblock %}

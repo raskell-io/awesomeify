@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+
+{% block title %}{{ category_name }} Repositories - {{ title | default(value='Awesomeify') }}{% endblock %}
+
+{% block description %}Explore {{ count }} {{ category_name }} repositories{% endblock %}
+
+{% block content %}
+<main class="main-content">
+    <section class="category-hero">
+        <nav class="breadcrumb">
+            <a href="{{ base_url }}">Home</a>
+            <span class="separator">/</span>
+            <span class="current">{{ category_type | capitalize }}</span>
+            <span class="separator">/</span>
+            <span class="current">{{ category_name }}</span>
+        </nav>
+
+        <h2>
+            {% if category_type == "language" %}
+            <span class="language-dot large" data-lang="{{ category_name | lower }}"></span>
+            {% endif %}
+            {{ category_name }}
+        </h2>
+        <p>{{ count }} repositories</p>
+    </section>
+
+    <div class="content-grid">
+        {% if languages is defined and languages | length > 0 %}
+        <aside class="sidebar">
+            <section class="nav-section">
+                <h3>Other Languages</h3>
+                <ul class="nav-list">
+                    {% for lang in languages %}
+                    <li>
+                        <a href="{{ base_url }}language/{{ lang.slug }}.html"
+                           {% if lang.slug == category_slug %}class="active"{% endif %}>
+                            <span class="language-dot" data-lang="{{ lang.name | lower }}"></span>
+                            {{ lang.name }}
+                            <span class="count">{{ lang.count }}</span>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </aside>
+        {% endif %}
+
+        <section class="repos-section {% if languages is not defined %}full-width{% endif %}">
+            <div class="section-header">
+                <h3>Repositories</h3>
+                <div class="section-controls">
+                    <select id="sort-by">
+                        <option value="stars">Sort by Stars</option>
+                        <option value="activity">Sort by Activity</option>
+                        <option value="recent">Recently Updated</option>
+                        <option value="name">Sort by Name</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="repos-grid" id="repos-list">
+                {% for repo in repos %}
+                {{ macros::repo_card(repo=repo) }}
+                {% endfor %}
+            </div>
+
+            {% if repos | length == 0 %}
+            <div class="empty-state">
+                <p>No repositories found in this category.</p>
+                <a href="{{ base_url }}" class="button">Browse all repositories</a>
+            </div>
+            {% endif %}
+        </section>
+    </div>
+</main>
+{% endblock %}

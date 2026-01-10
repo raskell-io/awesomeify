@@ -1,0 +1,43 @@
+[tools]
+rust = "1.83"
+node = "22"  # For Pagefind
+
+[env]
+RUST_BACKTRACE = "1"
+RUST_LOG = "awesomeify=debug"
+
+[tasks.build]
+description = "Build the project"
+run = "cargo build --release"
+
+[tasks.dev]
+description = "Run in development mode"
+run = "cargo run --"
+
+[tasks.index]
+description = "Run indexer with default config"
+run = "cargo run -- index"
+
+[tasks.generate]
+description = "Generate static site"
+run = "cargo run -- generate --output ./dist"
+
+[tasks.pagefind]
+description = "Build Pagefind search index"
+run = "npx pagefind --site ./dist --bundle-dir pagefind"
+
+[tasks.serve]
+description = "Serve the generated site locally"
+run = "npx serve ./dist"
+
+[tasks.full]
+description = "Full pipeline: index, generate, pagefind"
+depends = ["index", "generate", "pagefind"]
+
+[tasks.test]
+description = "Run tests"
+run = "cargo test"
+
+[tasks.lint]
+description = "Run clippy and format check"
+run = "cargo clippy -- -D warnings && cargo fmt --check"
